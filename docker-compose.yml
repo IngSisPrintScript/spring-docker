@@ -2,28 +2,28 @@ version: '3'
 
 services:
   api:
-    container_name: "compose-api"
+    container_name: ${API_NAME}
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - 8000:8080
+      - ${API_PORT}:${API_PORT}
     environment:
-      DB_USER: sa
-      DB_PASSWORD: password
-      DB_NAME: compose-db
-      DB_HOST: postgres_db
-      DB_PORT: 5432
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      DB_HOST: ${DB_HOST}
+      DB_PORT:  ${DB_PORT}
 
   db:
-    container_name: postgres_db
+    container_name: db
     image: postgres:12
     ports:
-    - 5432:5432
+    - ${DB_PORT}:${DB_PORT}
     environment:
-      POSTGRES_USER: sa
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: compose-db
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     volumes:
     - pgdata:/var/lib/postgresql/data
 
