@@ -1,8 +1,9 @@
-FROM gradle:5.6.0-jdk8 AS build
+FROM gradle:7.6.1-jdk17 AS build
 COPY  . /home/gradle/src
 WORKDIR /home/gradle/src
 RUN gradle assemble
-FROM openjdk:8-jre-slim
+# https://hub.docker.com/_/openjdk/tags?page=1&name=17-slim
+FROM openjdk:17-ea-17-slim-buster
 EXPOSE 8080
 RUN mkdir /app
 COPY --from=build /home/gradle/src/build/libs/*.jar /app/spring-boot-application.jar
